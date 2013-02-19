@@ -74,6 +74,7 @@
                 <condition>com.atlassian.confluence.plugin.descriptor.web.conditions.user.UserLoggedInCondition</condition>
                 <result name="success" type="velocity">/confluence/chat/templates/chatbar.vm</result>
             </action>
+
         </package>
         
         <package name="ChatActions" extends="default"  namespace="/chat">
@@ -106,7 +107,10 @@
                 <condition>com.atlassian.confluence.plugin.descriptor.web.conditions.user.UserLoggedInCondition</condition>
                 <result name="success" type="json" />
             </action>      
-            
+            <action name="popout" class="confluence.chat.actions.ChatPopoutAction" >
+                <condition>com.atlassian.confluence.plugin.descriptor.web.conditions.user.UserLoggedInCondition</condition>
+                <result name="success" type="velocity">/confluence/chat/templates/chat-poppedout.vm</result>
+            </action>
         </package>
     </xwork>
     <web-resource key="chat-files" name="Chat Files">

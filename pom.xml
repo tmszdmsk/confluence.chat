@@ -123,7 +123,6 @@
                         <artifactId>cargo-maven2-plugin</artifactId>
                         <version>1.0</version>
                     </dependency>
-
                 </dependencies>
             </plugin>
             <plugin>
