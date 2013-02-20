@@ -1,15 +1,19 @@
-<script type="text/javascript">
-$(function(ass){
-    $('body').bind('chat_init',function(){
-        setTimeout(function(){
-        console.log('dupa');
-        console.log($('.cb-content-hold'));
-        $('#full-height-container').remove();
-        var $content = $('#$chatboxId .cb-content-hold').css({position:'fixed', top:0, left:0, width:'100%', height:'100%', 'background-color':'white'});
-        $content.find('.cb-content,.cb-input>textarea').height('80%');
-        $content.find('.cb-input, .chat-where').height('10%');
-        },0);
-    });
-
-});
-</script>
+<style type="text/css">
+    #full-height-container{
+        display:none;
+    }
+    #$chatboxId .cb-content-hold {
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background-color: white;
+    }
+    #$chatboxId .cb-content-hold .cb-content{
+        height: 80% !important;
+    }
+    #$chatboxId .cb-content-hold .cb-input, #$chatboxId .cb-content-hold .chat-where {
+        height: 10%;
+    }
+</style>
