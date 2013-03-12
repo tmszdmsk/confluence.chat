@@ -188,8 +188,8 @@ ConfluenceChatConfig = {
             cache: false,
             dataType: "json",
             data: {
-                lr: this.lastHeartBeatServerdate,
-                mm: this.mousemove
+                lr: that.lastHeartBeatServerdate,
+                mm: that.mousemove 
             },
             error: function() {
                 that.requestErrorHandler();
@@ -392,7 +392,7 @@ ConfluenceChatConfig = {
             }).resize(function() {
                 that.restructureChatBoxes();
             });
-
+            this.startChatSession();
             this.bindChatWithLinks();
         }
     }
@@ -982,13 +982,15 @@ ConfluenceChatConfig = {
 
 
     ChatBox.prototype.send = function() {
-        var message = AJS.escapeHtml(this.textarea.val());
-        this.textarea.val('').focus().css('height', '44px');
+        var that = this;
+        var message = AJS.escapeHtml(this.textarea .val());
+        this.textarea .val('').focus().css('height','44px');
         if (message != '') {
-            jQuery.post(AJS.contextPath() + "/chat/send.action", {
-                to: this.chatUserList,
-                message: message
-            });
+            jQuery.post(AJS.contextPath()+"/chat/send.action", {
+                to: this.chatUserList, 
+                message: message, 
+                id: Math.round(Math.random() * 10000000) + "" + that.chatBoxId
+            } );
         }
         return false;
     }
@@ -997,8 +999,20 @@ ConfluenceChatConfig = {
             return;
         }
 
-        if (item.f.un != AJS.params.remoteUser) {
-            this.startBlink();
+        var id = "";
+        // check if messages is already added 
+        if(typeof(item.id) != "undefined"){
+            id = "cm"+item.id;
+            if(id.length > 0){
+                if($("#"+id).size()){
+                    return;
+                }
+            }
+            
+        }
+        
+        if(item.f.un != AJS.params.remoteUser){
+            this.startBlink();    
         }
 
         if (this.isClosed() && this.initialized) {
@@ -1051,7 +1065,11 @@ ConfluenceChatConfig = {
             messageHolder = userBox.find('.cb-mh');
         }
         //     nun einfach die nachricht noch drann
-        var messageItem = jQuery('<div/>').addClass('cb-mtext').html(message).attr('t', item.t);
+        var messageItem = jQuery('<div/>').addClass('cb-mtext').html(message).attr('t',item.t);
+        // check if message is already added
+        if(id.length > 0){
+            messageItem.attr('id', id);    
+        }
         messageItem.appendTo(messageHolder);
 
         content.scrollTop(content[0].scrollHeight);
